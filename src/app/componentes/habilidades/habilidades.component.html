@@ -1,0 +1,139 @@
+<div class="card mat-card">
+    <div class="divHabilidades">
+        <div class="card-titles">
+            <h2>Habilidades</h2>
+        </div>
+        <div class="data-control">
+            <div class="btn-edit"><a (click)="onOpenModal('add', null!)" *ngIf="isAdmin" class="btn-right"><i
+                        class="fa fa-plus"><span class="sr-only">(current)</span></i></a></div>
+        </div>
+    </div>
+    <ul>
+        <div class="container">
+            <div class="row">
+                <li class="lista col-sm-12 col-md-6 col-lg-4" *ngFor="let habilidad of habilidades">
+                    <div class="habilidades">
+                        <div class="data-container habilidades1">
+                          <!--<span class="habilidad">{{habilidad.nombre}}</span>-->
+                            <div class="izq">
+                                <div class="btn-edit">
+                                    <a class="btn-right" (click)="onOpenModal('edit', habilidad)" *ngIf="isAdmin"><i
+                                        class="fa fa-pen"></i></a><a (click)="onOpenModal('delete', habilidad)"
+                                    *ngIf="isAdmin"><i class="far fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                            <article class="flexin col-xs-12 col-sm-12 col-md-12 col-lg-12" id="circulo">
+                                <div class="col-xs-12 col-sm-11 col-md-11 col-lg-12">
+                                    <span class="habilidad">{{habilidad.nombre}}</span>
+                                        <circle-progress
+                                            [percent]="habilidad.porcentaje"
+                                            [radius]="29"
+                                            [outerStrokeWidth]="6"
+                                            [innerStrokeWidth]="3"
+                                            [outerStrokeColor]="'#086bcf'" 
+                                            [innerStrokeColor]="'#111111'"
+                                            [animation]="true"
+                                            [animationDuration]="600">
+                                        </circle-progress>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </ul>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateHabilidadModal" tabindex="-1" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateEmployeeModalLabel">Editar Habilidad</h5>
+                <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form #editForm="ngForm">
+                    <div class="form-group">
+                        <label for="name">Nombre de la habilidad</label>
+                        <input type="text" ngModel="{{editHabilidad?.nombre}}" name="nombre" class="form-control"
+                            id="habilidad" aria-describedby="emailHelp" placeholder="Ingrese el nombre de la habilidad">
+                    </div>
+                    <input type="hidden" ngModel="{{editHabilidad?.id}}" name="id" class="form-control" id="id"
+                        placeholder="ID">
+                    <div class="form-group">
+                        <label for="porcentaje">Porcentaje</label>
+                        <input type="number" ngModel="{{editHabilidad?.porcentaje}}" name="porcentaje"
+                            class="form-control" id="porcentaje" placeholder="Ingrese el % de conocimiento sobre la habilidad">
+                    </div>
+                    <div class="form-group">
+                        <label for="persona">Ingrese el ID de la persona</label>
+                        <input type="text" ngModel="{{editHabilidad?.persona_id}}" name="persona_id" class="form-control" id="persona_id" placeholder="Ingrese el ID de la Persona">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="" data-dismiss="modal" class="btn btn-secondary no">Cancelar</button>
+                        <button (click)="onUpdateHabilidad(editForm.value)" data-dismiss="modal"
+                            class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteHabilidadModal" tabindex="-1" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModelLabel">Borrar datos de educación</h5>
+                <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que quiere eliminar definitivamente la sección de {{deleteHabilidad?.nombre}}?</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary no" data-dismiss="modal">No</button>
+                    <button (click)="onDeleteHabilidad(deleteHabilidad!.id)" class="btn btn-danger"
+                        data-dismiss="modal">Si</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addHabilidadModal" role="dialog" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">Agregar habilidad</h5>
+                <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form #addForm="ngForm" (ngSubmit)="onAddHabilidad(addForm)">
+                    <div class="form-group">
+                        <label for="name">Nombre de la habilidad</label>
+                        <input type="text" ngModel="{{editHabilidad?.nombre}}"name="nombre" class="form-control" id="habilidad"
+                            placeholder="Ingrese el nombre de la habilidad" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="porcentaje">Porcentaje</label>
+                        <input type="number" ngModel="{{editHabilidad?.porcentaje}}"name="porcentaje" class="form-control" id="porcentaje" placeholder="Ingrese el % aprox. de conocimiento sobre la habilidad" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="persona">Ingrese el ID de la persona</label>
+                        <input type="text" ngModel="{{editHabilidad?.persona_id}}" name="persona_id" class="form-control" id="persona_id" placeholder="Ingrese el ID de la Persona" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="add-habilidad-form" class="btn btn-secondary no"
+                            data-dismiss="modal">Cancelar</button>
+                        <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

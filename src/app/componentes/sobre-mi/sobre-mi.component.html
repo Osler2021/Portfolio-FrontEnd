@@ -1,0 +1,50 @@
+<div class="card mat-card" id="main-container1" *ngFor="let sobremi of sobremis">
+    <div class="sobremicard">
+        <div class="card-titles">
+            <h2>Acerca de</h2>
+        </div>
+        <div class="data-control">
+            <div class="btn-edit">
+                <a class="btn-right" (click)="onOpenModal(sobremi, 'edit')" *ngIf="isAdmin"><i
+                        class="fa fa-pen"></i></a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p id="text-acercade">{{sobremi.descripcion}}</p>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateSobremiModal" tabindex="-1" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateEmployeeModalLabel">Editar datos personales</h5>
+                <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form #editForm="ngForm">
+                    <div class="form-group">
+                        <label for="name">Descripción personal</label>
+                        <input type="text" ngModel="{{editSobremi?.descripcion}}" name="descripcion"
+                            class="form-control" id="descripcion" aria-describedby="emailHelp"
+                            placeholder="Ingrese una descripción">
+                    </div>
+                    <div class="form-group">
+                        <label for="persona">Ingrese el ID de la persona</label>
+                        <input type="text" ngModel="{{editSobremi?.persona_id}}" name="persona_id" class="form-control" id="persona_id" placeholder="Ingrese el ID de la Persona" required>
+                    </div>
+                    <input type="hidden" ngModel="{{editSobremi?.id}}" name="id" class="form-control" id="id"
+                        placeholder="ID">
+                    <div class="modal-footer">
+                        <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Cerrar</button>
+                        <button (click)="onUpdateSobremi(editForm.value)" data-dismiss="modal"
+                            class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

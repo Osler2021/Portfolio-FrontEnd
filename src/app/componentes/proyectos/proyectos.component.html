@@ -1,0 +1,149 @@
+<div class="card mat-card">
+    <div class="card-titles encabezado">
+        <h2>Proyectos</h2>
+        <div class="btn-edit"><a (click)="onOpenModal('add', null!)" *ngIf="isAdmin" class="btn-right"><i
+                    class="fa fa-plus"><span class="sr-only">(current)</span></i></a></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="cart" *ngFor="let proyecto of proyectos">
+                <div class="izq">
+                    <div class="btn-edit">
+                        <a class="btn-right" (click)="onOpenModal('edit', proyecto)" *ngIf="isAdmin"><i
+                                class="fa fa-pen"></i></a><a (click)="onOpenModal('delete', proyecto)"
+                            *ngIf="isAdmin"><i class="far fa-trash-alt"></i></a>
+                    </div>
+                </div>
+                <h5>{{proyecto.nombre}}</h5>
+                <p>{{proyecto.descripcion}}</p>
+                <div class="periodo">
+                    <p>{{proyecto.anodesde}} - {{proyecto.anofin}}</p>
+                </div>
+                <a href="{{proyecto.url_imagen}}" target="_blank" class="btn1">Ir al sitio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateProyectoModal" tabindex="-1" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateEmployeeModalLabel">Editar datos del proyecto</h5>
+                <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form #editForm="ngForm">
+                    <div class="form-group">
+                        <label for="name">Nombre del proyecto</label>
+                        <input type="text" ngModel="{{editProyecto?.nombre}}" name="nombre"
+                            class="form-control" id="nombreProyecto" aria-describedby="emailHelp"
+                            placeholder="Ingrese el nombre del proyecto">
+                    </div>
+                    <input type="hidden" ngModel="{{editProyecto?.id}}" name="id" class="form-control" id="id"
+                        placeholder="Id">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción del proyecto</label>
+                        <input type="text" ngModel="{{editProyecto?.descripcion}}" name="descripcion"
+                            class="form-control" id="descripcion" placeholder="Ingrese una descripción del proyecto">
+                    </div>
+                    <div class="form-group">
+                        <label for="logo">URL del logo del proyecto</label>
+                        <input type="text" ngModel="{{editProyecto?.url_imagen}}" name="url_imagen" class="form-control"
+                            id="url_foto" placeholder="Ingrese la URL del logo del proyecto">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Año de inicio</label>
+                        <input type="text" ngModel="{{editProyecto?.anodesde}}" name="anodesde" class="form-control" id="anodesde"
+                            placeholder="Ingrese el año de inicio">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Año de finalización</label>
+                        <input type="text" ngModel="{{editProyecto?.anofin}}" name="anofin" class="form-control" id="anofin"
+                            placeholder="Ingrese el año de finalización">
+                    </div>
+                    <div class="form-group">
+                        <label for="persona">Ingrese el ID de la persona</label>
+                        <input type="text" ngModel="{{editProyecto?.persona_id}}" name="persona_id" class="form-control" id="persona_id" placeholder="Ingrese el ID de la Persona">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="" data-dismiss="modal" class="btn btn-secondary no">Cerrar</button>
+                        <button (click)="onUpdateProyecto(editForm.value)" data-dismiss="modal"
+                            class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteProyectoModal" tabindex="-1" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModelLabel">Eliminar proyecto</h5>
+                <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que quiere eliminar definitivamente su proyecto {{deleteProyecto?.nombre}} de
+                    esta sección?</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary no" data-dismiss="modal">No</button>
+                    <button (click)="onDeleteProyecto(deleteProyecto!.id)" class="btn btn-danger"
+                        data-dismiss="modal">Si</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addProyectoModal" role="dialog" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">Agregar proyecto</h5>
+                <span class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form #addForm="ngForm" (ngSubmit)="onAddProyecto(addForm)">
+                    <div class="form-group">
+                        <label for="name">Nombre del proyecto</label>
+                        <input type="text" ngModel name="nombre" class="form-control" id="nombreProyecto" placeholder="Ingrese el nombre del proyecto" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <input type="text" ngModel name="descripcion" class="form-control" id="descripcion" placeholder="Ingrese una descripción del proyecto" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Año de inicio</label>
+                        <input type="text" ngModel name="anodesde" class="form-control" id="anodesde" placeholder="Ingrese el año de inicio">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Año de finalización</label>
+                        <input type="text" ngModel name="anofin" class="form-control" id="anofin"
+                            placeholder="Ingrese el año de finalización">
+                    </div>
+                    <div class="form-group">
+                        <label for="url_imagen">URL del logo del proyecto</label>
+                        <input type="text" ngModel name="url_imagen" class="form-control" id="url_imagen"
+                            placeholder="Ingrese la URL del logo del proyecto" >
+                    </div>
+                    <div class="form-group">
+                        <label for="persona">Seleccione la persona</label>
+                        <input type="text" ngModel name="persona_id" class="form-control" id="persona_id" placeholder="Ingrese el ID de la Persona">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="add-habilidad-form" class="btn btn-secondary no"
+                            data-dismiss="modal">Cancelar</button>
+                        <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

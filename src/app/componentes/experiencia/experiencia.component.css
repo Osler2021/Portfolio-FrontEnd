@@ -1,0 +1,13 @@
+.btn-edit {
+    display: flex;
+}
+
+#exp {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+#logoexp {
+    width: 150px;
+}
