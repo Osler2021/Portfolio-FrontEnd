@@ -64,13 +64,13 @@
                     </div>
                     <div class="form-group">
                         <label for="fecha">Año de ingreso</label>
-                        <input type="text" ngModel="{{editExperiencia?.fechainicio}}" name="fechainicio"
-                            class="form-control" id="fechainicio" placeholder="Ingrese el año de inicio">
+                        <input type="date" ngModel="{{editExperiencia?.fechainicio}}" name="fechainicio"
+                            class="form-control" id="fechainicio" placeholder="Ingrese fecha de inicio, formato YYYY-MM-DD">
                     </div>
                     <div class="form-group">
                         <label for="fecha">Año de finalización</label>
-                        <input type="text" ngModel="{{editExperiencia?.fechafin}}" name="fechafin" class="form-control"
-                            id="fechafin" placeholder="Ingrese el año de finalización">
+                        <input type="date" ngModel="{{editExperiencia?.fechafin}}" name="fechafin" class="form-control"
+                            id="fechafin" placeholder="Ingrese fecha de finalización, formato YYYY-MM-DD">
                     </div>
                     <div class="form-group">
                         <label for="logo">URL del logo de la empresa</label>
@@ -140,14 +140,14 @@
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="fecha">Año de ingreso</label>
-                        <input type="number" ngModel name="fechainicio" class="form-control" id="fechainicio"
-                            placeholder="Ingrese el año de ingreso" required>
+                        <label for="fecha">Fecha de ingreso</label>
+                        <input type="date" ngModel name="fechainicio" class="form-control" id="fechainicio"
+                            placeholder="Ingrese la fecha de ingreso, formato YYYY-MM-DD" required>
                     </div>
                     <div class="form-group">
                         <label for="fecha">Año de finalización</label>
-                        <input type="number" ngModel name="fechafin" class="form-control" id="fechafin"
-                            placeholder="Ingrese el año de finalización" required>
+                        <input type="date" ngModel name="fechafin" class="form-control" id="fechafin"
+                            placeholder="Ingrese la fecha de finalización, formato YYYY-MM-DD" required>
                     </div>
                     <div class="form-group">
                         <label for="URL">URL del logo de la empresa</label>
